@@ -1,0 +1,19 @@
+{
+  "name": "ilia-nodejs-challenge-wallet",
+  "version": "1.0.0",
+  "description": "Microsservice Wallet",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oliveirapablo/ilia-nodejs-challenge.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oliveirapablo/ilia-nodejs-challenge/issues"
+  },
+  "homepage": "https://github.com/oliveirapablo/ilia-nodejs-challenge#readme"
+}
