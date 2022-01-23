@@ -26,4 +26,18 @@ describe('CreateTransactionController', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('user_id'))
   })
+
+  test('Should return 400 if no type is provided', async () => {
+    const { sut } = makeSut()
+
+    const httpRequest = {
+      body: {
+        user_id: 'any_user_id',
+        amout: 'any_amount'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new MissingParamError('type'))
+  })
 })
