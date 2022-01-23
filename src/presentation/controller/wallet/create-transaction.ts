@@ -21,12 +21,12 @@ export class CreateTransactionController implements Controller {
       if (!Object.values(TypesTransaction).includes(type)) {
         return badRequest(new InvalidParamError('type'))
       }
-      await this.addTransaction.add({
+      const transaction = await this.addTransaction.add({
         user_id,
         type,
         amount
       })
-      return ok({ message: 'ok' })
+      return ok(transaction)
     } catch (error) {
       return serverError()
     }
