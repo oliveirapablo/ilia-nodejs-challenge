@@ -1,6 +1,6 @@
 import { TransactionModel } from '../models/transaction'
 
-export const enum TypesTransaction {
+export enum TypesTransaction {
   CREDIT = 'CREDIT',
   DEBIT = 'DEBIT'
 }
