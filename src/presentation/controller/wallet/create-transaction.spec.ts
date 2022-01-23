@@ -124,4 +124,22 @@ describe('CreateTransactionController', () => {
     expect(httResponse.statusCode).toBe(500)
     expect(httResponse.body).toEqual(new ServerError())
   })
+  test('Should return 200 if valid data is provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        user_id: 'valid_user_id',
+        amount: 30,
+        type: 'CREDIT'
+      }
+    }
+    const httResponse = await sut.handle(httpRequest)
+    expect(httResponse.statusCode).toBe(200)
+    expect(httResponse.body).toEqual({
+      id: 'valid_id',
+      user_id: 'valid_user_id',
+      amount: 30,
+      type: 'CREDIT'
+    })
+  })
 })
