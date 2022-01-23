@@ -1,9 +1,4 @@
-import { TransactionModel } from '../models/transaction'
-
-export enum TypesTransaction {
-  CREDIT = 'CREDIT',
-  DEBIT = 'DEBIT'
-}
+import { TransactionModel, TypesTransaction } from '../models/transaction'
 
 export interface AddTransactionModel {
   user_id: string
@@ -12,5 +7,5 @@ export interface AddTransactionModel {
 }
 
 export interface AddTransaction {
-  add(transaction: AddTransactionModel): TransactionModel
+  add(transaction: AddTransactionModel): Promise<TransactionModel>
 }
