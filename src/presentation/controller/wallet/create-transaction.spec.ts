@@ -19,7 +19,7 @@ describe('CreateTransactionController', () => {
     const httpRequest = {
       body: {
         type: 'any_type',
-        amout: 'any_amount'
+        amount: 'any_amount'
       }
     }
     const httpResponse = await sut.handle(httpRequest)
@@ -33,11 +33,25 @@ describe('CreateTransactionController', () => {
     const httpRequest = {
       body: {
         user_id: 'any_user_id',
-        amout: 'any_amount'
+        amount: 'any_amount'
       }
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('type'))
+  })
+
+  test('Should return 400 if no amout is provided', async () => {
+    const { sut } = makeSut()
+
+    const httpRequest = {
+      body: {
+        user_id: 'any_user_id',
+        type: 'any_type'
+      }
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new MissingParamError('amount'))
   })
 })
