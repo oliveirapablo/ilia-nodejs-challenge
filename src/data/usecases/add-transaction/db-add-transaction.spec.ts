@@ -67,4 +67,22 @@ describe('DbAddTransaction Usecase', () => {
     const promise = sut.add(transactionData)
     await expect(promise).rejects.toThrow('')
   })
+
+  test('Should an transaction on success', async () => {
+    const { sut } = makeSut()
+
+    const transactionData = {
+      user_id: 'valid_user_id',
+      type: TypesTransaction.CREDIT,
+      amount: 30
+    }
+    const transaction = await sut.add(transactionData)
+
+    expect(transaction).toEqual({
+      id: 'valid_id',
+      user_id: 'valid_user_id',
+      amount: 30,
+      type: TypesTransaction.CREDIT
+    })
+  })
 })
