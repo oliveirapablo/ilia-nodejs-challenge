@@ -7,7 +7,7 @@ export class TransactionMongoRepository implements AddTransactionRepository {
     const transactionCollection = MongoHelper.getCollection('transactions')
     const result = await transactionCollection.insertOne(transactionData)
     const idInserted = result.insertedId.toString()
-    console.log(idInserted)
+
     return { id: idInserted, ...transactionData }
   }
 }
