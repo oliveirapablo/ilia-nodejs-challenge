@@ -9,11 +9,22 @@ describe('Transaction Mongo Repository', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
   })
+
   afterAll(async () => {
     await MongoHelper.disconnect()
   })
+
+  beforeEach(async () => {
+    const accountCollection = MongoHelper.getCollection('transactions')
+    await accountCollection.deleteMany({})
+  })
+
+  const makeSut = (): TransactionMongoRepository => {
+    return new TransactionMongoRepository()
+  }
+
   test('Shoul return an transaction on success', async () => {
-    const sut = new TransactionMongoRepository()
+    const sut = makeSut()
     const transaction = await sut.add({
       user_id: 'valid_user_id',
       amount: 30,
