@@ -6,16 +6,23 @@ enum TypesTransaction {
   DEBIT = 'DEBIT'
 }
 
+const makeFakeTransaction = (): TransactionModel => ({
+  id: 'valid_id',
+  user_id: 'valid_user_id',
+  amount: 30,
+  type: TypesTransaction.CREDIT
+})
+
+const makeFakeTransactionData = (): AddTransactionModel => ({
+  user_id: 'valid_user_id',
+  amount: 30,
+  type: TypesTransaction.CREDIT
+})
+
 const makeAddTransactionRepository = (): AddTransactionRepository => {
   class AddTransactionRepositoryStub implements AddTransactionRepository {
     async add (accountData: AddTransactionModel): Promise<TransactionModel> {
-      const fakeTransaction = {
-        id: 'valid_id',
-        user_id: 'valid_user_id',
-        amount: 30,
-        type: TypesTransaction.CREDIT
-      }
-      return await new Promise(resolve => resolve(fakeTransaction))
+      return await new Promise(resolve => resolve(makeFakeTransaction()))
     }
   }
   return new AddTransactionRepositoryStub()
@@ -41,48 +48,22 @@ describe('DbAddTransaction Usecase', () => {
     const { sut, addTransactionRepositoryStub } = makeSut()
     const addSpy = jest.spyOn(addTransactionRepositoryStub, 'add')
 
-    const transactionData = {
-      user_id: 'valid_user_id',
-      type: TypesTransaction.CREDIT,
-      amount: 30
-    }
-    await sut.add(transactionData)
+    await sut.add(makeFakeTransactionData())
 
-    expect(addSpy).toHaveBeenCalledWith({
-      user_id: 'valid_user_id',
-      type: TypesTransaction.CREDIT,
-      amount: 30
-    })
+    expect(addSpy).toHaveBeenCalledWith(makeFakeTransactionData())
   })
 
   test('Should throw if AddTransactionRepository throws', async () => {
     const { sut, addTransactionRepositoryStub } = makeSut()
     jest.spyOn(addTransactionRepositoryStub, 'add')
       .mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
-    const transactionData = {
-      user_id: 'valid_user_id',
-      type: TypesTransaction.CREDIT,
-      amount: 30
-    }
-    const promise = sut.add(transactionData)
+    const promise = sut.add(makeFakeTransactionData())
     await expect(promise).rejects.toThrow('')
   })
 
   test('Should an transaction on success', async () => {
     const { sut } = makeSut()
-
-    const transactionData = {
-      user_id: 'valid_user_id',
-      type: TypesTransaction.CREDIT,
-      amount: 30
-    }
-    const transaction = await sut.add(transactionData)
-
-    expect(transaction).toEqual({
-      id: 'valid_id',
-      user_id: 'valid_user_id',
-      amount: 30,
-      type: TypesTransaction.CREDIT
-    })
+    const transaction = await sut.add(makeFakeTransactionData())
+    expect(transaction).toEqual(makeFakeTransaction())
   })
 })
