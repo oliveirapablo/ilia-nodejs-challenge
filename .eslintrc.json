@@ -8,6 +8,7 @@
         "@typescript-eslint/method-signature-style": "off",
         "no-return-await": "off",
         "@typescript-eslint/return-await": "error",
-        "@typescript-eslint/no-misused-promises": "off"
+        "@typescript-eslint/no-misused-promises": "off",
+        "@typescript-eslint/restrict-plus-operands": "off"
     }
 }

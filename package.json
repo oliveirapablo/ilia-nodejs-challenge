@@ -4,8 +4,10 @@
   "description": "Microsservice Wallet",
   "main": "index.js",
   "scripts": {
-    "start": "sucrase-node src/main/server.ts",
+    "start": "node dist/src/main/server.js",
+    "dev": "sucrase-node src/main/server.ts",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "build": "rimraf dist && tsc",
     "test:verbose": "jest --passWithNoTests",
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
     "test:ci": "npm test -- --coverage",
