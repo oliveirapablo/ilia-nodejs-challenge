@@ -6,8 +6,6 @@ export class TransactionMongoRepository implements AddTransactionRepository {
   async add (transactionData: AddTransactionModel): Promise<TransactionModel> {
     const transactionCollection = MongoHelper.getCollection('transactions')
     const result = await transactionCollection.insertOne(transactionData)
-    const idInserted = result.insertedId.toString()
-
-    return { id: idInserted, ...transactionData }
+    return MongoHelper.map(transactionData)
   }
 }
