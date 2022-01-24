@@ -12,7 +12,7 @@ export const MongoHelper = {
     this.client.close()
   },
 
-  getCollection (name: string): Collection {
+  async getCollection (name: string): Promise<Collection> {
     return this.client.db().collection(name)
   },
   map: (data: any): any => {

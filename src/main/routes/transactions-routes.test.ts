@@ -12,7 +12,7 @@ describe('Transactions Routes', () => {
   })
 
   beforeEach(async () => {
-    const accountCollection = MongoHelper.getCollection('transactions')
+    const accountCollection = await MongoHelper.getCollection('transactions')
     await accountCollection.deleteMany({})
   })
   test('Shoul return an transaction on success', async () => {
