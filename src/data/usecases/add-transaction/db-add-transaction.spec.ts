@@ -9,13 +9,13 @@ enum TypesTransaction {
 const makeAddTransactionRepository = (): AddTransactionRepository => {
   class AddTransactionRepositoryStub implements AddTransactionRepository {
     async add (accountData: AddTransactionModel): Promise<TransactionModel> {
-      const fakeAccount = {
+      const fakeTransaction = {
         id: 'valid_id',
         user_id: 'valid_user_id',
         amount: 30,
         type: TypesTransaction.CREDIT
       }
-      return await new Promise(resolve => resolve(fakeAccount))
+      return await new Promise(resolve => resolve(fakeTransaction))
     }
   }
   return new AddTransactionRepositoryStub()
@@ -23,23 +23,23 @@ const makeAddTransactionRepository = (): AddTransactionRepository => {
 
 interface SutTypes {
   sut: DbAddTransaction
-  addAccountRepositoryStub: AddTransactionRepository
+  addTransactionRepositoryStub: AddTransactionRepository
 }
 
 const makeSut = (): SutTypes => {
-  const addAccountRepositoryStub = makeAddTransactionRepository()
-  const sut = new DbAddTransaction(addAccountRepositoryStub)
+  const addTransactionRepositoryStub = makeAddTransactionRepository()
+  const sut = new DbAddTransaction(addTransactionRepositoryStub)
 
   return {
     sut,
-    addAccountRepositoryStub
+    addTransactionRepositoryStub
   }
 }
 
 describe('DbAddTransaction Usecase', () => {
   test('Should call AddTransactionRepository with correct values', async () => {
-    const { sut, addAccountRepositoryStub } = makeSut()
-    const addSpy = jest.spyOn(addAccountRepositoryStub, 'add')
+    const { sut, addTransactionRepositoryStub } = makeSut()
+    const addSpy = jest.spyOn(addTransactionRepositoryStub, 'add')
 
     const transactionData = {
       user_id: 'valid_user_id',
@@ -53,5 +53,18 @@ describe('DbAddTransaction Usecase', () => {
       type: TypesTransaction.CREDIT,
       amount: 30
     })
+  })
+
+  test('Should throw if AddTransactionRepository throws', async () => {
+    const { sut, addTransactionRepositoryStub } = makeSut()
+    jest.spyOn(addTransactionRepositoryStub, 'add')
+      .mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const transactionData = {
+      user_id: 'valid_user_id',
+      type: TypesTransaction.CREDIT,
+      amount: 30
+    }
+    const promise = sut.add(transactionData)
+    await expect(promise).rejects.toThrow('')
   })
 })
