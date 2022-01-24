@@ -9,7 +9,7 @@ export class BalanceTransactionController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const { amount } = await this.balanceTransaction.balance()
+      const amount = await this.balanceTransaction.balance()
       return ok(amount)
     } catch (error) {
       return serverError()

@@ -54,7 +54,7 @@ describe('GetTransactionController', () => {
   test('Should return 200 if valid data is provided', async () => {
     const { sut } = makeSut()
     const httResponse = await sut.handle(makeFakeRequest())
-    const { amount } = makeFakeBalance()
+    const amount = makeFakeBalance()
     expect(httResponse).toEqual(ok(amount))
   })
 })
