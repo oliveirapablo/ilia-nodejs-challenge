@@ -9,8 +9,8 @@ export class GetTransactionController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const transaction = await this.getTransaction.find()
-      return ok(transaction)
+      const { transactions } = await this.getTransaction.find()
+      return ok(transactions)
     } catch (error) {
       return serverError()
     }
