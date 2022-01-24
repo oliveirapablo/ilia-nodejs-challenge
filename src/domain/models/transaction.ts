@@ -9,3 +9,7 @@ export interface TransactionModel {
   amount: number
   type: TypesTransaction
 }
+
+export interface TransactionsModel {
+  transactions: TransactionModel[]
+}
