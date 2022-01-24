@@ -13,3 +13,7 @@ export interface TransactionModel {
 export interface TransactionsModel {
   transactions: TransactionModel[]
 }
+
+export interface BalanceTransactionModel {
+  amount: number
+}
